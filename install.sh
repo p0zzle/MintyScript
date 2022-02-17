@@ -7,7 +7,6 @@
 # Script start;
 # Borrando vino e instalando x11vnc
 
-cd ~
 sudo apt-get -y remove vino
 sudo apt-get install -y x11vnc
 
@@ -19,8 +18,6 @@ sudo x11vnc --storepasswd /etc/x11vnc/vncpwd
 
 
 # Creo el servicio para systemd
-
-sudo xed /lib/systemd/system/x11vnc.service
 
 printf "[Unit]\nDescription=Start x11vnc at startup.\nAfter=multi-user.target\n\n[Service]\n
 Type=simple\nExecStart=/usr/bin/x11vnc -auth guess -forever -noxdamage -repeat -rfbauth /etc/x11vnc/vncpwd 
