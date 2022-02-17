@@ -49,6 +49,7 @@ sudo cp /usr/lib/x86_64-linux-gnu/libcupsimage.so.2 /usr/lib/x86_64-linux-gnu/li
 sudo cp /usr/lib/i386-linux-gnu/libcups.so.2 /usr/lib/i386-linux-gnu/libcups.so
 sudo cp /usr/lib/i386-linux-gnu/libcupsimage.so.2 /usr/lib/i386-linux-gnu/libcupsimage.so
 
+tar -xzvf hasar.tar.gz
 cd 250
 sudo ./setup
 cd ..
@@ -57,3 +58,4 @@ sudo ./setup
 cd ..
 
 printf "La instalacion de las impresoras termino"
+printf "La instalacion de practicamente todo termino! wow."
