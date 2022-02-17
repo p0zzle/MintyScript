@@ -35,6 +35,15 @@ sudo systemctl enable x11vnc.service
 
 sudo systemctl start x11vnc.service
 
+# Setup de carpetas, cambio de Hostname, seleccion de IP manual en base al lugar de Instalacion.
+
+sudo mkdir /media/x
+sudo mkdir /media/t
+
+printf "//192.$lugar.0.5/factura/ /media/x      cifs    username=tys,password=tys,file_mode=0666,dir_mode=0777\n
+//192.$lugar.0.5/temporal /media/t      cifs    username=tys,password=tys,file_mode=0666,dir_mode=0777\n" >> /etc/fstab
+
+
 # Instalacion de impresoras Hasar, sourced de Mario Palacios, V2.
 # Instalacion de aplicaciones y librerias necesarias.
 sudo apt-get install cups ia32-libs libcups2:i368 libcupsfilters1:i386 libcupsimage2:i386 -y
@@ -54,5 +63,5 @@ cd 1000
 sudo ./setup
 cd ..
 
-printf "La instalacion de las impresoras termino"
-printf "La instalacion de practicamente todo termino! wow."
+printf "La instalacion de las impresoras termino\n"
+printf "La instalacion de practicamente todo termino! wow. ※ (^o^)/※\n"
