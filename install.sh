@@ -29,22 +29,67 @@ sudo x11vnc --storepasswd /etc/x11vnc/vncpwd
 sudo mkdir /media/x
 sudo mkdir /media/t
 
-# Creo el servicio para systemd
+# Creo el servicios de x11vnc para systemd
+
 
 printf "[Unit]\nDescription=Start x11vnc at startup.\nAfter=multi-user.target\n\n[Service]\n
 Type=simple\nExecStart=/usr/bin/x11vnc -auth guess -forever -noxdamage -repeat -rfbauth\n /etc/x11vnc/vncpwd
 -rfbport 5900 -shared -noxkb -nomodtweak\n\n[Install]\nWantedBy=multi-user.target\n\n" > /lib/systemd/system/x11vnc.service
 
-# Servicios
+
+# Reinicio y habilito x11vnc
 sudo systemctl daemon-reload
 sudo systemctl enable x11vnc.service
 sudo systemctl start x11vnc.service
+
 # Cambio de Hostname, insercion de IP en base a la eleccion original.
 echo "$hostn" > /etc/hostname
-sed -i -e "s/\"nick_name\" : \"hostname\"/\"nick_name\" : \"$hostn\"/g" /home/tys/.iptux/config.json
+# sed en caso de que iptux solucione (o yo entienda) como se crean las configuraciones iniciales.
+# sed -i -e "s/\"nick_name\" : \"hostname\"/\"nick_name\" : \"$hostn\"/g" /home/tys/.iptux/config.json
 echo "//192.168.$suc.5/factura/ /media/x      cifs    username=tys,password=tys,file_mode=0666,dir_mode=0777" >> /etc/fstab
 printf "\n" >> /etc/fstab
 echo "//192.168.$suc.5/temporal /media/t      cifs    username=tys,password=tys,file_mode=0666,dir_mode=0777" >> /etc/fstab
+########## INICIO DE LA CONFIGURACION DE IPTUX.
+printf '{
+	"archive_path" : "/home/tys",\n
+	"belong_group" : "",\n
+	"candidacy_encode" : "utf-16",\n
+	"clearup_history" : false,\n
+	"hide_startup" : false,\n
+	"main_window_height" : 510,\n
+	"main_window_width" : 250,\n
+	"msg_tip" : "/usr/share/iptux/sound/msg.ogg",\n
+	"msgsnd_support" : true,\n
+	"my_icon" : "icon-tux.png",\n' > /home/tys/.iptux/config.json
+echo "	\"nick_name\" : \"$hostn\"," >> /home/tys/.iptux/config.json
+printf '\n	"open_blacklist" : false,\n
+	"open_chat" : true,\n
+	"open_transmission" : false,\n
+	"pal_icon" : "icon-qq.png",\n
+	"panel_font" : "Sans Serif 10",\n
+	"peer_enclosure_paned_divide" : 114,\n
+	"peer_file_recieve_paned_divide" : 94,\n
+	"peer_historyinput_paned_divide" : 255,\n
+	"peer_infoenclosure_paned_divide" : 255,\n
+	"peer_main_paned_divide" : 375,\n
+	"peer_window_height" : 420,\n
+	"peer_window_width" : 570,\n
+	"personal_sign" : "",\n
+	"preference_encode" : "utf-8",\n
+	"proof_shared" : false,\n
+	"record_log" : false,\n
+	"scan_net_segment" : [],\n
+	"sound_support" : true,\n
+	"trans_tip" : "/usr/share/iptux/sound/trans.ogg",\n
+	"trans_window_height" : 350,\n
+	"trans_window_width" : 500,\n
+	"transnd_support" : true,\n
+	"use_enter_key" : true,\n
+	"version" : 1,\n
+	"volume_degree" : 0\n
+}' >> /home/tys/.iptux/config.json
+########## FINAL DE LA CONFIGURACION DE IPTUX
+
 
 # Instalacion de impresoras Hasar, sourced de Mario Palacios, V2.
 # Instalacion de aplicaciones y librerias necesarias.
@@ -72,5 +117,5 @@ cd ..
 
 sudo mount -a
 
-printf "La instalacion de las impresoras termino\n"
-printf "La instalacion de practicamente todo termino! wow. ※ (^o^)/※\n"
+printf "La instalacion termino! ※ (^o^)/※\n"
+printf "Seria una buena idea reiniciar la computadora."
