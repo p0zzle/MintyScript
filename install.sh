@@ -32,9 +32,16 @@ sudo mkdir /media/t
 # Creo el servicios de x11vnc para systemd
 
 
-printf "[Unit]\nDescription=Start x11vnc at startup.\nAfter=multi-user.target\n\n[Service]\n
-Type=simple\nExecStart=/usr/bin/x11vnc -auth guess -forever -noxdamage -repeat -rfbauth\n /etc/x11vnc/vncpwd
--rfbport 5900 -shared -noxkb -nomodtweak\n\n[Install]\nWantedBy=multi-user.target\n\n" > /lib/systemd/system/x11vnc.service
+printf "[Unit]
+Description=Start x11vnc at startup.
+After=multi-user.target\n
+[Service]
+Type=simple
+ExecStart=/usr/bin/x11vnc -auth guess -forever -noxdamage -repeat -rfbauth /etc/x11vnc/vncpwd -rfbport 5900 -shared -noxkb -nomodtweak
+Restart=on-failure
+RestartSec=5s\n
+[Install]
+WantedBy=multi-user.target" > /lib/systemd/system/x11vnc.service
 
 
 # Reinicio y habilito x11vnc
@@ -51,42 +58,42 @@ printf "\n" >> /etc/fstab
 echo "//192.168.$suc.5/temporal /media/t      cifs    username=tys,password=tys,file_mode=0666,dir_mode=0777" >> /etc/fstab
 ########## INICIO DE LA CONFIGURACION DE IPTUX.
 printf '{
-	"archive_path" : "/home/tys",\n
-	"belong_group" : "",\n
-	"candidacy_encode" : "utf-16",\n
-	"clearup_history" : false,\n
-	"hide_startup" : false,\n
-	"main_window_height" : 510,\n
-	"main_window_width" : 250,\n
-	"msg_tip" : "/usr/share/iptux/sound/msg.ogg",\n
-	"msgsnd_support" : true,\n
-	"my_icon" : "icon-tux.png",\n' > /home/tys/.iptux/config.json
+	"archive_path" : "/home/tys",
+	"belong_group" : "",
+	"candidacy_encode" : "utf-16",
+	"clearup_history" : false,
+	"hide_startup" : false,
+	"main_window_height" : 510,
+	"main_window_width" : 250,
+	"msg_tip" : "/usr/share/iptux/sound/msg.ogg",
+	"msgsnd_support" : true,
+	"my_icon" : "icon-tux.png",' > /home/tys/.iptux/config.json
 echo "	\"nick_name\" : \"$hostn\"," >> /home/tys/.iptux/config.json
-printf '\n	"open_blacklist" : false,\n
-	"open_chat" : true,\n
-	"open_transmission" : false,\n
-	"pal_icon" : "icon-qq.png",\n
-	"panel_font" : "Sans Serif 10",\n
-	"peer_enclosure_paned_divide" : 114,\n
-	"peer_file_recieve_paned_divide" : 94,\n
-	"peer_historyinput_paned_divide" : 255,\n
-	"peer_infoenclosure_paned_divide" : 255,\n
-	"peer_main_paned_divide" : 375,\n
-	"peer_window_height" : 420,\n
-	"peer_window_width" : 570,\n
-	"personal_sign" : "",\n
-	"preference_encode" : "utf-8",\n
-	"proof_shared" : false,\n
-	"record_log" : false,\n
-	"scan_net_segment" : [],\n
-	"sound_support" : true,\n
-	"trans_tip" : "/usr/share/iptux/sound/trans.ogg",\n
-	"trans_window_height" : 350,\n
-	"trans_window_width" : 500,\n
-	"transnd_support" : true,\n
-	"use_enter_key" : true,\n
-	"version" : 1,\n
-	"volume_degree" : 0\n
+printf '\n	"open_blacklist" : false,
+	"open_chat" : true,
+	"open_transmission" : false,
+	"pal_icon" : "icon-qq.png",
+	"panel_font" : "Sans Serif 10",
+	"peer_enclosure_paned_divide" : 114,
+	"peer_file_recieve_paned_divide" : 94,
+	"peer_historyinput_paned_divide" : 255,
+	"peer_infoenclosure_paned_divide" : 255,
+	"peer_main_paned_divide" : 375,
+	"peer_window_height" : 420,
+	"peer_window_width" : 570,
+	"personal_sign" : "",
+	"preference_encode" : "utf-8",
+	"proof_shared" : false,
+	"record_log" : false,
+	"scan_net_segment" : [],
+	"sound_support" : true,
+	"trans_tip" : "/usr/share/iptux/sound/trans.ogg",
+	"trans_window_height" : 350,
+	"trans_window_width" : 500,
+	"transnd_support" : true,
+	"use_enter_key" : true,
+	"version" : 1,
+	"volume_degree" : 0
 }' >> /home/tys/.iptux/config.json
 ########## FINAL DE LA CONFIGURACION DE IPTUX
 
