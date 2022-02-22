@@ -8,7 +8,7 @@
 # Github: https://github.com/p0zzle
 # Fecha: 17/02/2022
 # Ultima actualizacion: 22/02/2022
-# experimental-install-V1.0.0
+# experimental-install-V1.1.0
 
 
 # Script start;
@@ -22,7 +22,7 @@ read -p " Hostname == " hostn
 # Borrando vino, instalando x11 y iptux
 sudo apt-get update
 sudo apt-get -y remove vino
-sudo apt-get install -y x11vnc iptux chromium
+sudo apt-get install -y x11vnc iptux chromium gnome-startup-applications
 
 # Creando las carpetas, generando password de x11.
 
@@ -30,6 +30,8 @@ sudo mkdir /etc/x11vnc
 sudo x11vnc --storepasswd /etc/x11vnc/vncpwd
 sudo mkdir /media/x
 sudo mkdir /media/t
+mkdir /home/tys/.config/autostart
+mkdir /home/tys/.iptux/
 
 # Creo el servicios de x11vnc para systemd
 
@@ -54,7 +56,6 @@ sudo systemctl start x11vnc.service
 
 echo "$hostn" > /etc/hostname
 echo "//192.168.$suc.5/factura/ /media/x      cifs    username=tys,password=tys,file_mode=0666,dir_mode=0777" >> /etc/fstab
-printf "\n" >> /etc/fstab
 echo "//192.168.$suc.5/temporal /media/t      cifs    username=tys,password=tys,file_mode=0666,dir_mode=0777" >> /etc/fstab
 
 ########## INICIO DE LA CONFIGURACION DE IPTUX.
@@ -104,7 +105,15 @@ Exec=iptux
 Hidden=False
 X-GNOME-Autostart-enabled=true
 Name=iptux
-Comment=LAN Messaging App" > /home/tys/.config/autostart
+Comment=LAN Messaging App" > /home/tys/.config/autostart/iptux.desktop
+
+printf "[Desktop Entry]
+Type=Application
+Exec=firefox http://www.sprenger.com.ar/sucursales
+Hidden=False
+X-GNOME-Autostart-enabled=true
+Name=firefox
+Comment=Firefox Starting Web Page." > /home/tys/.config/autostart/firefox.desktop
 
 ########## FINAL DE LA CONFIGURACION DE IPTUX
 
@@ -137,6 +146,4 @@ cd ..
 sudo mount -a
 
 printf "La instalacion termino! ※ (^o^)/※\n"
-printf "Se va a lanzar Gnome Session Properties. Despues habria que reiniciar."
-
-gnome-session-properties
+printf "Hay que reiniciar para aplicar el nuevo hostname."
