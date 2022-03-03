@@ -24,7 +24,7 @@ read -p " Hostname == " hostn
 # Borrando vino, instalando x11 y iptux
 sudo apt-get update
 sudo apt-get -y remove vino
-sudo apt-get install -y x11vnc chromium
+sudo apt-get install -y x11vnc chromium lm-sensors hddtemp
 
 # Creando las carpetas, generando password de x11.
 
