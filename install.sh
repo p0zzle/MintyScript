@@ -14,11 +14,14 @@
 # Script start;
 # Mensaje de bienvenida y preguntas para completar algunos temas basicos
 printf "Hola!Necesito que me des un poco de informacion sobre la instalacion.\n"
-printf "Primero, donde estas instalandolo?\n0 - Farmatotal - 0\n101 - Centro - 101\n102 - Alem - 102\n103 - Perito - 103\n104 - Kuanip - 104\n105 - Tolhuin - 105\n106 - Farmatotal - 106\n"
-read -p "Escribi el numero de la sucursal == " suc
+printf "Ingresa la IP de la sucursal, formato \"192.168.255.255\""
+read -p "Escribi el numero de la sucursal == " ipsuc
 printf "Segundo, cual es el hostname de esta PC?"
 read -p " Hostname == " hostn
-
+read -p "username ==" usr
+read -p "password ==" pswd
+read -p "carpeta tmp ==" tmp
+read -p "carpeta de facturacion	==" facturacion
 # Borrando vino, instalando x11 y iptux
 sudo apt-get update
 sudo apt-get -y remove vino
@@ -55,8 +58,8 @@ sudo systemctl start x11vnc.service
 # Cambio de Hostname, insercion de IP en base a la eleccion original.
 
 echo "$hostn" > /etc/hostname
-echo "//192.168.$suc.5/factura/ /media/x      cifs    username=tys,password=tys,file_mode=0666,dir_mode=0777" >> /etc/fstab
-echo "//192.168.$suc.5/temporal /media/t      cifs    username=tys,password=tys,file_mode=0666,dir_mode=0777" >> /etc/fstab
+echo "//192.168.$ipsuc.5/$facturacion/ /media/x      cifs    username=$usr,password=$pswd,file_mode=0666,dir_mode=0777" >> /etc/fstab
+echo "//192.168.$ipsuc.5/$tmp /media/t      cifs    username=$usr,password=$usr,file_mode=0666,dir_mode=0777" >> /etc/fstab
 
 ########## INICIO DE LA CONFIGURACION DE IPTUX.
 
